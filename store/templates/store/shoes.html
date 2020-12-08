@@ -1,0 +1,71 @@
+{% extends 'store/main.html' %}
+
+{% block content %}
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+    .btn {
+       position: relative;
+    }
+</style>
+{% endblock %}
+
+ {% if products %}
+    <h1 class='text-center'>These are all products in category: Shoes</h1>
+    <hr>
+        <div class="row">
+
+            {% for product in page_obj %}
+            <div class="col-lg-4">
+            <img class="thumbnail" src="{{ product.image.url }}">
+            <div class="box-element product">
+                <h6><strong>{{product.name}}</strong></h6>
+                <hr>
+                {% if user.is_authenticated %}
+                    <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+                {% else %}
+                    <li class="btn" id="signup-button">
+                          <a class="btn-text" href="{% url 'login' %}">
+                            sign in to buy
+                          </a>
+                        </li>
+                {% endif %}
+                <a class="btn btn-outline-success" href="{% url 'product_details' product.id %}">View</a>
+                <h5 style="display: inline-block; float:right">BGN {{ product.price|floatformat:2}}</h5>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline-info mb-4" href="?page=1">&laquo; first</a>
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    <strong>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</strong>
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+    </div>
+    {% else %}
+    <div class="text-center">
+        <h2>There are no products in category shoes</h2>
+
+    </div>
+    {% endif %}
+
+
+
+
+
+{% endblock %}

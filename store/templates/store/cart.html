@@ -1,0 +1,57 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content%}
+<style>
+        .button {
+            position: relative;
+                    }
+</style>
+
+<div class="row>">
+    <div clss="col-lg-12">
+        <div class="box-element">
+            <a class="btn btn-outline-dark button" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
+            <br>
+            <br>
+            <table class="table">
+                <tr>
+                    <th><h5>Items:</h5><strong>{{ order.get_cart_items }}</strong></th>
+                    <th><h5>Total:</h5><strong>BGN {{ order.get_cart_total|floatformat:2 }}</strong></th>
+                    <th><a style="float: right; margin: 5px" class="btn btn-success button" href="{% url 'checkout' %}">Checkout</a></th>
+                </tr>
+
+            </table>
+        </div>
+
+        <br>
+
+        <div class="box-element">
+            <div class="cart-row">
+                <div style="flex:2"></div>
+                <div style="flex:2"><strong>Item</strong></div>
+                <div style="flex:1"><strong>Price</strong></div>
+                <div style="flex:1"><strong>Quantity</strong></div>
+                <div style="flex:1"><strong>Total</strong></div>
+            </div>
+
+            {% for item in items %}
+                <div class="cart-row">
+                    <div style="flex:2"><img class="row-image" src="{{ item.product.image.url }}"></div>
+                    <div style="flex:2">{{ item.product.name }}</div>
+                    <div style="flex:1">BGN {{ item.product.price|floatformat:2 }}</div>
+                    <div style="flex:1">
+                        <p class="quantity">{{ item.quantity }}</p>
+                        <div class="quantity">
+                            <div><i data-product={{item.product.id}} data-action="add" class="fa fa-chevron-up chg-quantity update-cart button" aria-hidden="true"></i></div>
+                            <div><i data-product={{item.product.id}} data-action="remove" class="fa fa-chevron-down chg-quantity update-cart button" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                    <div style="flex:1">BGN {{item.get_total}}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

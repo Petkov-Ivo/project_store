@@ -1,0 +1,55 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content%}
+<style>
+.btn {
+   position: relative;
+}
+
+</style>
+
+<div class="row">
+    {% for product in page_obj %}
+        <div class="col-lg-4">
+
+            <img class="thumbnail" src="{{ product.image.url }}">
+            <div class="box-element product">
+                <h6><strong>{{product.name}}</strong></h6>
+                <hr>
+                {% if user.is_authenticated %}
+                    <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+                {% else%}
+                      <li class="btn" id="signup-button">
+                          <a class="btn-text" href="{% url 'login' %}">
+                            sign in to buy
+                          </a>
+                        </li>
+                {% endif %}
+                <a class="btn btn-outline-success" href="{% url 'product_details' product.id %}">View</a>
+                <h5 style="display: inline-block; float:right">BGN {{ product.price|floatformat:2}}</h5>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+<br>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-info mb-4" href="?page=1">&laquo; first</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            <strong>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</strong>
+        </span>
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">next</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

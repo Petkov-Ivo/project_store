@@ -1,0 +1,72 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark" id="nav-color">
+    <a class="navbar-brand" href="{% url 'store'%}">My Store</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
+            </li>
+
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Categories
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Clothes</a>
+                            <a class="dropdown-item" href="{% url 'get shoes' %}">Shoes</a>
+                            <a class="dropdown-item" href="#">Books</a>
+                            <a class="dropdown-item" href="#">Electronics</a>
+
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Other</a>
+                        </div>
+                      </li>
+
+        </ul>
+
+
+                {% if user.is_authenticated %}
+                <li class="btn btn-warning">
+                    <a href="{% url 'create product' %}">
+                        Add product
+                    </a>
+                </li>
+                <li class="list-item" id="nav-user">
+                    <a href="{% url 'user profile' user.id %}">
+                        {{ user.username }}
+                    </a>
+                </li>
+                <li class="btn btn-warning">
+                    <a href="{% url 'logout' %}">
+                        Sign out
+                    </a>
+                </li>
+
+                <a href="{% url 'cart' %}">
+                    <i class="fa fa-shopping-cart" aria-hidden="true" id="nav-color1"></i>
+                </a>
+                <p id="cart-total">{{ cartItems}}</p>
+
+
+                {% else %}
+                <li class="btn" id="signin-button">
+                    <a class="btn-text" href="{% url 'login' %}">
+                        Sign in
+                    </a>
+                </li>
+                <li class="btn" id="signup-button">
+                    <a class="btn-text" href="{% url 'signup user' %}">
+                        Sign up
+                    </a>
+                </li>
+                {% endif %}
+
+
+    </div>
+</nav>
+

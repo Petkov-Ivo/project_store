@@ -1,0 +1,38 @@
+{% extends 'store/main.html'%}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+    #details {
+    position: relative;
+
+}
+li {
+    list-style-type: none;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="col-lg-4">
+
+    <img class="thumbnail" src="{{ product.image.url }}">
+    <div class="box-element product">
+        <h6><strong>{{product.name}}</strong></h6>
+        <hr>
+    </div>
+
+
+        {% if can_delete %}
+            <a href="{% url 'delete_product' product.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+        {% if can_update %}
+            <a href="{% url 'edit_product' product.id %}" class="btn btn-warning">Edit</a>
+        {% endif %}
+</div>
+
+    {% endblock %}
