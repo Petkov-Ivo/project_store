@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
 
+from .filters import ProductFilter
 from .forms.productform import ProductForm
 from .models import *
 
@@ -101,6 +102,8 @@ def store(request):
         cartItems = order['get_cart_items']
 
     products = Product.objects.all()
+    my_filter = ProductFilter(request.GET, queryset=products)
+    products = my_filter.qs
     # Paginator
     paginator = Paginator(products, 6)
     page_number = request.GET.get('page')
@@ -110,6 +113,7 @@ def store(request):
         'products': products,
         'cartItems': cartItems,
         'page_obj': page_obj,
+        'my_filter': my_filter,
     }
     return render(request, 'store/store.html', context)
 
@@ -201,3 +205,104 @@ def get_shoes(request):
         'page_obj': page_obj,
     }
     return render(request, 'store/shoes.html', context)
+
+
+def get_clothes(request):
+    products = Product.objects.filter(category='Clothes')
+    # Paginator
+    paginator = Paginator(products, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
+
+    context = {
+        'products': products,
+        'cartItems': cartItems,
+        'page_obj': page_obj,
+    }
+    return render(request, 'store/clothes.html', context)
+
+
+def get_books(request):
+    products = Product.objects.filter(category='Books')
+    # Paginator
+    paginator = Paginator(products, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
+
+    context = {
+        'products': products,
+        'cartItems': cartItems,
+        'page_obj': page_obj,
+    }
+    return render(request, 'store/books.html', context)
+
+
+def get_electronics(request):
+    products = Product.objects.filter(category='Electronics')
+    # Paginator
+    paginator = Paginator(products, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
+
+    context = {
+        'products': products,
+        'cartItems': cartItems,
+        'page_obj': page_obj,
+    }
+    return render(request, 'store/electronics.html', context)
+
+
+def get_other(request):
+    products = Product.objects.filter(category='Other')
+    # Paginator
+    paginator = Paginator(products, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
+
+    context = {
+        'products': products,
+        'cartItems': cartItems,
+        'page_obj': page_obj,
+    }
+    return render(request, 'store/other.html', context)
+
