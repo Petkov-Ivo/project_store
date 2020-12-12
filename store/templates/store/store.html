@@ -17,7 +17,11 @@
                 <h6><strong>{{product.name}}</strong></h6>
                 <hr>
                 {% if user.is_authenticated %}
-                    <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+                    {% if product.product_quantity > 0 %}
+                        <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+                    {% else %}
+                        <p style="color: red"><strong> Product is sold out</strong></p>
+                    {% endif %}
                 {% else%}
                       <li class="btn" id="signup-button">
                           <a class="btn-text" href="{% url 'login' %}">

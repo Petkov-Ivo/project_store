@@ -17,6 +17,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
+    product_quantity = models.IntegerField()
 
     user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='items', null=True, blank=True)
