@@ -33,6 +33,16 @@ li {
         {% if can_update %}
             <a href="{% url 'edit_product' product.id %}" class="btn btn-warning">Edit</a>
         {% endif %}
+    <hr>
+    <h6><strong>Product name:   {{product.name}}</strong></h6>
+    <hr>
+    <h6><strong>Product price:   {{product.price}}</strong></h6>
+    <hr>
+    <h6><strong>Product category:   {{product.category}}</strong></h6>
+    <hr>
+    <h6><strong>Product quantity:   {{product.product_quantity}}</strong></h6>
+    <hr>
+
 </div>
 
     {% endblock %}

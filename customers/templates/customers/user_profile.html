@@ -14,8 +14,8 @@
     </style>
 {% endblock %}
     <div class="text-center">
-        <h1>Hello, {{ user.username }}!</h1>
-        <h5>This is your profile</h5>
+        <h1> {{ user.username }}'s profile</h1>
+
          {% if profile.profile_picture %}
             <img class="rounded-circle mb-3" src="{{ profile.profile_picture.url }}" alt="Generic placeholder image" width="140" height="140">
         {% else %}
