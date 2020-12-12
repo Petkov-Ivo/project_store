@@ -32,7 +32,11 @@ def create_product(request):
 
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            product = form.save(commit=False)
+            # product.user = request.user
+            product.user = Customer.objects.get(user=request.user)
+            product.save()
+            # form.save()
 
             return redirect('/')
         else:

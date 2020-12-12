@@ -1,6 +1,7 @@
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
 
@@ -18,13 +19,16 @@ def user_profile(request, pk):
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
+
     if request.method == 'GET':
+
         context = {
             'user': user,
             'profile': user.customer,
             'form': CustomerProfileForm(),
             'products': user.customer.product_set.all(),
             'cartItems': cartItems,
+
         }
         return render(request, 'customers/user_profile.html', context)
     else:
